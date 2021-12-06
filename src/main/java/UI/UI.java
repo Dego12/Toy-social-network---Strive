@@ -1,20 +1,25 @@
 package UI;
 
 import domain.Friendship;
+import domain.Message;
 import domain.User;
 import service.FriendshipService;
+import service.MessageService;
 import service.UserService;
-import java.util.Random;
 
-import java.util.Scanner;
+import java.io.Console;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class UI {
     private UserService us;
     private FriendshipService fs;
+    private MessageService ms;
 
-    public UI(UserService us, FriendshipService fs){
+    public UI(UserService us, FriendshipService fs, MessageService ms){
         this.us = us;
         this.fs = fs;
+        this.ms = ms;
     }
 
     public User createAccount()
@@ -115,6 +120,60 @@ public class UI {
         us.deleteUser(user);
     }
 
+    private int compare(Message m1, Message m2)
+    {
+        return m1.getData().compareTo(m2.getData());
+    }
+
+    public void messenger(User user)
+    {
+        boolean running = true;
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter the name of the friends you'd like to send a message to");
+        String friend = sc.nextLine();
+        String[] friends = friend.split(", ");
+        List<User> to = new LinkedList<User>();
+        for (String f : friends) {
+            String[] fr = f.split(" ");
+            for (User u : this.us.getAll()) {
+                if (u.getFirstName().equals(fr[0]) && u.getLastName().equals(fr[1])) {
+                    to.add(u);
+                }
+            }
+        }
+        List<Message> messages = new ArrayList<>();
+        for (Message m: this.ms.getAll())
+        {
+            messages.add(m);
+        }
+        messages.sort(Comparator.comparing(Message::getData));
+        for (String f : friends)
+        {
+            String[] fr = f.split(" ");
+            for (Message m: messages)
+            {
+                for (User u: m.getTo())
+                {
+                    if (u.getFirstName().equals(fr[0]) && u.getLastName().equals(fr[1]) || ((u.getFirstName().equals(user.getFirstName())) && (u.getLastName().equals(user.getLastName()))))
+                    {
+                        System.out.println(m);
+                    }
+                }
+            }
+        }
+        while (running) {
+            String message = sc.nextLine();
+            if (message.equals("x")) {
+                running = false;
+            }
+            LocalDateTime date = LocalDateTime.now();
+            Message msg = new Message(user, to, message, date);
+            ms.addMessage(msg);
+            System.out.println(msg);
+        }
+    }
+
     public void menu()
     {
         System.out.println("Choose your option:");
@@ -123,7 +182,8 @@ public class UI {
         System.out.println("3.Show all users");
         System.out.println("4.Show all friends");
         System.out.println("5.Delete User");
-        System.out.println("6.Log out");
+        System.out.println("6.Messenger");
+        System.out.println("7.Log out");
     }
 
     public FriendshipService getFriendshipService()

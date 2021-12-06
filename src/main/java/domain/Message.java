@@ -1,5 +1,6 @@
 package domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -57,9 +58,25 @@ public class Message extends Entity<Long>{
         this.date = date;
     }
 
+    public String toStringToUsers()
+    {
+        StringBuilder sb = new StringBuilder();
+        for (User u: to)
+        {
+            sb.append(u.getFirstName());
+            sb.append(" ");
+            sb.append(u.getLastName());
+            if (to.size() > 1)
+            {
+                sb.append(",");
+            }
+        }
+        return sb.toString();
+    }
+
     @Override
     public String toString()
     {
-        return "From: " + this.from + "to: " + this.to + "at: " + date;
+        return "At: " + this.date + " From: " + this.from + ": " + this.message;
     }
 }

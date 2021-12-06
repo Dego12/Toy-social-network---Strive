@@ -42,8 +42,9 @@ public class Console {
                         logged = false;
                     }
                     if (option2 == 6)
+                        ui.messenger(user);
+                    if (option2 == 7)
                         logged = false;
-
                 }
             }
             if (option == 2) {
@@ -66,6 +67,8 @@ public class Console {
                         logged = false;
                     }
                     if (option2 == 6)
+                        ui.messenger(user);
+                    if (option2 == 7)
                         logged = false;
                 }
             }
