@@ -102,11 +102,11 @@ public class UI {
             for (Friendship fr : this.fs.getAll()) {
                 if (fr.getUser1().getFirstName().equals(user.getFirstName()) && fr.getUser1().getLastName().equals(user.getLastName()))
                 {
-                    System.out.println(fr.getUser2());
+                    System.out.println(fr.getUser2() + " since " + fr.getDate());
                 }
                 if (fr.getUser2().getFirstName().equals(user.getFirstName()) && fr.getUser2().getLastName().equals(user.getLastName()))
                 {
-                    System.out.println(fr.getUser1());
+                    System.out.println(fr.getUser1() + " since " + fr.getDate());
                 }
             }
     }

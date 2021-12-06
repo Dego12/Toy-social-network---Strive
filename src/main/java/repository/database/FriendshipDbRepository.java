@@ -6,6 +6,9 @@ import repository.Repository;
 import validators.Validator;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,10 +45,13 @@ public class FriendshipDbRepository implements Repository<Long, Friendship> {
                 String u1_last_name = resultSet.getString("first_user_last_name");
                 String u2_first_name = resultSet.getString("second_user_first_name");
                 String u2_last_name = resultSet.getString("second_user_last_name");
-
+                String string_date = resultSet.getString("date");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+                LocalDate localDate = LocalDate.parse(string_date);
                 User u1 = new User(u1_first_name, u1_last_name);
                 User u2 = new User(u2_first_name, u2_last_name);
                 Friendship fr = new Friendship(u1, u2);
+                fr.setDate(localDate);
                 fr.setId(id);
                 friendships.add(fr);
             }
@@ -59,7 +65,7 @@ public class FriendshipDbRepository implements Repository<Long, Friendship> {
     @Override
     public Friendship save(Friendship entity) {
 
-        String sql = "insert into friendships (first_user_first_name, first_user_last_name, second_user_first_name, second_user_last_name) values (?, ?, ?, ?)";
+        String sql = "insert into friendships (first_user_first_name, first_user_last_name, second_user_first_name, second_user_last_name, date) values (?, ?, ?, ?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -68,6 +74,7 @@ public class FriendshipDbRepository implements Repository<Long, Friendship> {
             ps.setString(2, entity.getUser1().getLastName());
             ps.setString(3, entity.getUser2().getFirstName());
             ps.setString(4, entity.getUser2().getLastName());
+            ps.setString(5, entity.getDate().toString());
 
             ps.executeUpdate();
         } catch (SQLException e) {
