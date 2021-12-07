@@ -105,16 +105,20 @@ public class UI {
 
     public void showFriends(User user)
     {
+        List<Friendship> friendships = new ArrayList<Friendship>();
         for (Friendship fr : this.fs.getAll()) {
-            if (fr.getUser1().getFirstName().equals(user.getFirstName()) && fr.getUser1().getLastName().equals(user.getLastName()))
-            {
-                System.out.println(fr.getUser2() + " since " + fr.getDate());
-            }
-            if (fr.getUser2().getFirstName().equals(user.getFirstName()) && fr.getUser2().getLastName().equals(user.getLastName()))
-            {
-                System.out.println(fr.getUser1() + " since " + fr.getDate());
-            }
+                friendships.add(fr);
         }
+        friendships.stream()
+                .filter(x -> {
+                    return (x.getUser1().getFirstName().equals(user.getFirstName()) && x.getUser1().getLastName().equals(user.getLastName()));
+                })
+                .forEach(x->{System.out.println(x.getUser2() + " since " + x.getDate());});
+        friendships.stream()
+                .filter(x -> {
+                    return (x.getUser2().getFirstName().equals(user.getFirstName()) && x.getUser2().getLastName().equals(user.getLastName()));
+                })
+                .forEach(x -> {System.out.println(x.getUser1() + " since " + x.getDate());});
     }
 
     public void deleteUser(User user) {
@@ -183,8 +187,7 @@ public class UI {
         System.out.println("3.Show all users");
         System.out.println("4.Show all friends");
         System.out.println("5.Delete User");
-        System.out.println("6.Messenger");
-        System.out.println("7.Log out");
+        System.out.println("6.Log out");
     }
 
     public FriendshipService getFriendshipService()
