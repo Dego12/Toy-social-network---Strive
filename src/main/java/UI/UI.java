@@ -1,14 +1,18 @@
 package UI;
 
+import domain.FriendRequest;
 import domain.Friendship;
 import domain.Message;
 import domain.User;
+import service.FriendRequestService;
 import service.FriendshipService;
 import service.MessageService;
 import service.UserService;
 
 import java.io.Console;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -16,12 +20,17 @@ public class UI {
     private UserService us;
     private FriendshipService fs;
     private MessageService ms;
+    private FriendRequestService frs;
 
-    public UI(UserService us, FriendshipService fs, MessageService ms){
+    public UI(UserService us, FriendshipService fs, MessageService ms, FriendRequestService frs){
         this.us = us;
         this.fs = fs;
         this.ms = ms;
+        this.frs=frs;
     }
+
+
+    public FriendshipService getFriendshipService(){return fs;}
 
     public User createAccount()
     {
@@ -121,6 +130,14 @@ public class UI {
                 .forEach(x -> {System.out.println(x.getUser1() + " since " + x.getDate());});
     }
 
+    public void showFriendRequests(User user){
+        for(FriendRequest fr:this.frs.getAll()){
+            if (fr.getUser2().getFirstName().equals(user.getFirstName()) && fr.getUser2().getLastName().equals(user.getLastName())){
+                System.out.println(fr);
+            }
+        }
+    }
+
     public void deleteUser(User user) {
         us.deleteUser(user);
     }
@@ -180,21 +197,96 @@ public class UI {
         }
     }
 
+
+    public void showFriendsWithDate(User user)
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the month(ex: 01,03,10) ");
+        String luna=sc.nextLine();
+        List<Friendship> friendships = new ArrayList<Friendship>();
+        for (Friendship fr : this.fs.getAll()) {
+            friendships.add(fr);
+        }
+            friendships.stream()
+                    .filter(x -> {
+                        return (x.getDate().toString().split("-")[1].equals(luna) && (x.getUser1().getFirstName().equals(user.getFirstName()) && x.getUser1().getLastName().equals(user.getLastName())));
+                    })
+                    .forEach(x->{System.out.println(x.getUser2() + " since " + x.getDate());});
+            friendships.stream()
+                    .filter(x -> {
+                        return (x.getDate().toString().split("-")[1].equals(luna) && (x.getUser2().getFirstName().equals(user.getFirstName()) && x.getUser2().getLastName().equals(user.getLastName())));
+                    })
+                    .forEach(x -> {System.out.println(x.getUser1() + " since " + x.getDate());});
+        }
+            //if (luna_prietenie.equals(luna)) {
+
+              //  if (fr.getUser1().getFirstName().equals(user.getFirstName()) && fr.getUser1().getLastName().equals(user.getLastName())) {
+                //    System.out.println(fr.getUser2() + " since " + fr.getDate());
+                //}
+                //if (fr.getUser2().getFirstName().equals(user.getFirstName()) && fr.getUser2().getLastName().equals(user.getLastName())) {
+                 //   System.out.println(fr.getUser1() + " since " + fr.getDate());
+                //}
+
+
+
+
+
+
+    public void addFriendRequest(User user){
+        Scanner sc = new Scanner(System.in);
+        Random rand = new Random();
+        System.out.println("Enter the name of the user you'd like to be friends with");
+        String Name = sc.nextLine();
+        String[] flName = Name.split(" ");
+        String firstName = flName[0];
+        String lastName = flName[1];
+
+        for (User usr: us.getAll())
+        {
+            if (usr.getFirstName().equals(firstName) && usr.getLastName().equals(lastName)) {
+                FriendRequest friendrequest= new FriendRequest(user,usr,"Pending");
+                friendrequest.setId((long)rand.nextInt(20));
+                this.frs.addFriendRequest(friendrequest);
+                System.out.println("Friend request sent!");
+
+            }
+        }
+    }
+
+    public void manageFriendRequests(User user){
+        for(FriendRequest fr:this.frs.getAll()){
+            if (fr.getUser2().getFirstName().equals(user.getFirstName()) && fr.getUser2().getLastName().equals(user.getLastName()) && fr.getStatus().equals("Pending")){
+                System.out.println("Do you accept "+fr.getUser1()+"'s friend request?(Accept/Decline)");
+                Scanner sc = new Scanner(System.in);
+                String answer = sc.nextLine();
+                if(answer.equals("Accept")){
+                    fr.setStatus("Accepted");
+                    this.frs.updateFriendRequest(fr);
+                    Friendship friendship=new Friendship(fr.getUser1(),fr.getUser2());
+                    this.fs.addFriendship(friendship);
+                }
+                else if(answer.equals("Decline")){
+                    fr.setStatus("Declined");
+                    this.frs.updateFriendRequest(fr);
+                }
+            }
+        }
+    }
+
     public void menu()
     {
         System.out.println("Choose your option:");
-        System.out.println("1.Add friend");
-        System.out.println("2.Delete friend");
-        System.out.println("3.Show all users");
-        System.out.println("4.Show all friends");
-        System.out.println("5.Delete User");
-        System.out.println("6.Messenger");
-        System.out.println("7.Log out");
+        System.out.println("1.Friend requests");
+        System.out.println("2.Manage friend requests");
+        System.out.println("3.Add friend");
+        System.out.println("4.Delete friend");
+        System.out.println("5.Show all users");
+        System.out.println("6.Show all friends");
+        System.out.println("7.Show all friends added in a specific month");
+        System.out.println("8.Delete User");
+        System.out.println("9.Messenger");
+        System.out.println("10.Log out");
     }
 
-    public FriendshipService getFriendshipService()
-    {
-        return this.fs;
-    }
 
 }
