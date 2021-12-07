@@ -155,7 +155,11 @@ public class UI {
             {
                 for (User u: m.getTo())
                 {
-                    if (u.getFirstName().equals(fr[0]) && u.getLastName().equals(fr[1]) || ((u.getFirstName().equals(user.getFirstName())) && (u.getLastName().equals(user.getLastName()))))
+                    if (u.getFirstName().equals(fr[0]) && u.getLastName().equals(fr[1]) && ((m.getFrom().getFirstName().equals(user.getFirstName())) && (m.getFrom().getLastName().equals(user.getLastName()))))
+                    {
+                        System.out.println(m);
+                    }
+                    if (m.getFrom().getFirstName().equals(fr[0]) && m.getFrom().getLastName().equals(fr[1]) && (u.getFirstName().equals(user.getFirstName()) && u.getLastName().equals(user.getLastName())))
                     {
                         System.out.println(m);
                     }
@@ -166,6 +170,7 @@ public class UI {
             String message = sc.nextLine();
             if (message.equals("x")) {
                 running = false;
+                break;
             }
             LocalDateTime date = LocalDateTime.now();
             Message msg = new Message(user, to, message, date);
