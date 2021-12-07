@@ -166,6 +166,7 @@ public class UI {
             String message = sc.nextLine();
             if (message.equals("x")) {
                 running = false;
+                break;
             }
             LocalDateTime date = LocalDateTime.now();
             Message msg = new Message(user, to, message, date);
