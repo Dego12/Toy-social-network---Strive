@@ -218,19 +218,6 @@ public class UI {
                     })
                     .forEach(x -> {System.out.println(x.getUser1() + " since " + x.getDate());});
         }
-            //if (luna_prietenie.equals(luna)) {
-
-              //  if (fr.getUser1().getFirstName().equals(user.getFirstName()) && fr.getUser1().getLastName().equals(user.getLastName())) {
-                //    System.out.println(fr.getUser2() + " since " + fr.getDate());
-                //}
-                //if (fr.getUser2().getFirstName().equals(user.getFirstName()) && fr.getUser2().getLastName().equals(user.getLastName())) {
-                 //   System.out.println(fr.getUser1() + " since " + fr.getDate());
-                //}
-
-
-
-
-
 
     public void addFriendRequest(User user){
         Scanner sc = new Scanner(System.in);
