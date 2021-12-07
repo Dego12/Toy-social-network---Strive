@@ -88,6 +88,7 @@ public class UserDbRepository implements Repository<Long, User> {
             ps.setInt(3, user.getId().intValue());
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

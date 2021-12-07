@@ -30,20 +30,26 @@ public class Console {
                     ui.menu();
                     int option2 = sc.nextInt();
                     if (option2 == 1)
-                        ui.addFriend(user);
+                        ui.showFriendRequests(user);
                     if (option2 == 2)
-                        ui.deleteFriend(user);
+                        ui.manageFriendRequests(user);
                     if (option2 == 3)
-                        ui.showUsers();
+                        ui.addFriendRequest(user);
                     if (option2 == 4)
+                        ui.deleteFriend(user);
+                    if (option2 == 5)
+                        ui.showUsers();
+                    if (option2 == 6)
                         ui.showFriends(user);
-                    if (option2 == 5) {
+                    if (option2 == 7)
+                        ui.showFriendsWithDate(user);
+                    if (option2 == 8) {
                         ui.deleteUser(user);
                         logged = false;
                     }
-                    if (option2 == 6)
+                    if (option2 == 9)
                         ui.messenger(user);
-                    if (option2 == 7)
+                    if (option2 == 10)
                         logged = false;
                 }
             }
