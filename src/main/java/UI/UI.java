@@ -10,6 +10,7 @@ import service.UserService;
 import java.io.Console;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class UI {
     private UserService us;
@@ -104,25 +105,20 @@ public class UI {
 
     public void showFriends(User user)
     {
-            for (Friendship fr : this.fs.getAll()) {
-                if (fr.getUser1().getFirstName().equals(user.getFirstName()) && fr.getUser1().getLastName().equals(user.getLastName()))
-                {
-                    System.out.println(fr.getUser2() + " since " + fr.getDate());
-                }
-                if (fr.getUser2().getFirstName().equals(user.getFirstName()) && fr.getUser2().getLastName().equals(user.getLastName()))
-                {
-                    System.out.println(fr.getUser1() + " since " + fr.getDate());
-                }
+        for (Friendship fr : this.fs.getAll()) {
+            if (fr.getUser1().getFirstName().equals(user.getFirstName()) && fr.getUser1().getLastName().equals(user.getLastName()))
+            {
+                System.out.println(fr.getUser2() + " since " + fr.getDate());
             }
+            if (fr.getUser2().getFirstName().equals(user.getFirstName()) && fr.getUser2().getLastName().equals(user.getLastName()))
+            {
+                System.out.println(fr.getUser1() + " since " + fr.getDate());
+            }
+        }
     }
 
     public void deleteUser(User user) {
         us.deleteUser(user);
-    }
-
-    private int compare(Message m1, Message m2)
-    {
-        return m1.getData().compareTo(m2.getData());
     }
 
     public void messenger(User user)
@@ -155,7 +151,11 @@ public class UI {
             {
                 for (User u: m.getTo())
                 {
-                    if (u.getFirstName().equals(fr[0]) && u.getLastName().equals(fr[1]) || ((u.getFirstName().equals(user.getFirstName())) && (u.getLastName().equals(user.getLastName()))))
+                    if (u.getFirstName().equals(fr[0]) && u.getLastName().equals(fr[1]) && ((m.getFrom().getFirstName().equals(user.getFirstName())) && (m.getFrom().getLastName().equals(user.getLastName()))))
+                    {
+                        System.out.println(m);
+                    }
+                    if (m.getFrom().getFirstName().equals(fr[0]) && m.getFrom().getLastName().equals(fr[1]) && (u.getFirstName().equals(user.getFirstName()) && u.getLastName().equals(user.getLastName())))
                     {
                         System.out.println(m);
                     }
