@@ -166,6 +166,7 @@ public class UI {
                 }
             }
         }
+        System.out.println("Enter 'x' to exit!");
         while (running) {
             String message = sc.nextLine();
             if (message.equals("x")) {
@@ -187,7 +188,8 @@ public class UI {
         System.out.println("3.Show all users");
         System.out.println("4.Show all friends");
         System.out.println("5.Delete User");
-        System.out.println("6.Log out");
+        System.out.println("6.Messenger");
+        System.out.println("7.Log out");
     }
 
     public FriendshipService getFriendshipService()
