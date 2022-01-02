@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="351.0" style="-fx-background-color: #20120f;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView layoutY="-4.0" prefHeight="383.0" prefWidth="351.0" style="-fx-background-color: #9c2b27;">
+        <columns>
+          <TableColumn prefWidth="116.0" style="-fx-background-color: #e45652;" text="From" />
+            <TableColumn prefWidth="100.0" style="-fx-background-color: #e45652;" text="Status" />
+            <TableColumn prefWidth="134.0" style="-fx-background-color: #e45652;" text="Action" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

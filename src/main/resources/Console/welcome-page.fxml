@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="508.0" prefWidth="891.0" style="-fx-background-color: #20120f;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Console.ConsoleController">
+   <children>
+      <ImageView fitHeight="523.0" fitWidth="891.0" layoutY="3.0" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="https://yvoicenshmcom.files.wordpress.com/2019/10/people-laughing.jpg" />
+         </image>
+      </ImageView>
+      <TableView layoutX="14.0" layoutY="13.0" prefHeight="394.0" prefWidth="328.0" style="-fx-background-color: #9c2b27; -fx-background-radius: 20;">
+        <columns>
+            <TableColumn prefWidth="102.0" style="-fx-background-color: #e45652;" text="First Name" />
+          <TableColumn minWidth="0.0" prefWidth="135.0" style="-fx-background-color: #e45652; -fx-font-color: #c2b6b6;" text="Last Name" />
+            <TableColumn prefWidth="89.0" style="-fx-background-color: #e45652;" text="Action" />
+        </columns>
+      </TableView>
+      <Label layoutX="381.0" layoutY="216.0" prefHeight="98.0" prefWidth="458.0" text="Or you can search among your friend list to send messages!" textFill="#aeaeae">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="368.0" layoutY="135.0" prefHeight="68.0" prefWidth="478.0" text="Here on the left you can see the users you can be friends with!" textFill="#aeaeae">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="name" layoutX="630.0" layoutY="88.0" prefHeight="47.0" prefWidth="105.0" text="friend!" textFill="#aeaeae">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <Label layoutX="475.0" layoutY="66.0" prefHeight="90.0" prefWidth="139.0" text="Welcome" textFill="#aeaeae">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <JFXButton buttonType="RAISED" layoutX="42.0" layoutY="444.0" onAction="#handleLoggout" prefHeight="26.0" prefWidth="273.0" style="-fx-background-color: #e45652;" text="Log out" />
+      <JFXButton layoutX="544.0" layoutY="302.0" prefHeight="25.0" prefWidth="131.0" style="-fx-background-color: #e45652;" text="See friend list" />
+      <Label layoutX="446.0" layoutY="352.0" prefHeight="40.0" prefWidth="328.0" text="You can check your friend requests as well!" textFill="#aeaeae">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="544.0" layoutY="407.0" prefHeight="25.0" prefWidth="131.0" style="-fx-background-color: #e45652;" text="Check friend requests" />
+   </children>
+</AnchorPane>

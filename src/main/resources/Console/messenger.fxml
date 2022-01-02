@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="600.0" style="-fx-background-color: #20120f;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="247.0" layoutY="14.0" prefHeight="32.0" prefWidth="106.0" text="Messenger" textFill="#aeaeae">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TableView layoutX="12.0" layoutY="59.0" prefHeight="317.0" prefWidth="577.0" style="-fx-background-color: #9c2b27; -fx-background-radius: 20;">
+         <columns>
+            <TableColumn prefWidth="115.0" style="-fx-background-color: #e45652;" text="From" />
+            <TableColumn minWidth="0.0" prefWidth="130.0" style="-fx-background-color: #e45652; -fx-font-color: #c2b6b6;" text="To" />
+            <TableColumn prefWidth="222.0" style="-fx-background-color: #e45652;" text="Message" />
+            <TableColumn prefWidth="109.0" style="-fx-background-color: #e45652;" text="At" />
+         </columns>
+      </TableView>
+      <JFXTextField fx:id="username" focusColor="#3cc656" layoutX="134.0" layoutY="398.0" prefHeight="25.0" prefWidth="333.0" promptText="Enter your message here" style="-fx-color: #c2b6b6;" unFocusColor="#c2b6b6" />
+      <JFXButton layoutX="235.0" layoutY="438.0" prefHeight="25.0" prefWidth="131.0" style="-fx-background-color: #e45652;" text="Send" />
+   </children>
+</AnchorPane>

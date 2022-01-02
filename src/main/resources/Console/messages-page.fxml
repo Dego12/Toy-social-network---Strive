@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #20120f;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="165.0" layoutY="14.0" prefHeight="32.0" prefWidth="270.0" text="Send a message to someone" textFill="#aeaeae">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TableView layoutX="136.0" layoutY="63.0" prefHeight="317.0" prefWidth="328.0" style="-fx-background-color: #9c2b27; -fx-background-radius: 20;">
+         <columns>
+            <TableColumn prefWidth="102.0" style="-fx-background-color: #e45652;" text="First Name" />
+            <TableColumn minWidth="0.0" prefWidth="135.0" style="-fx-background-color: #e45652; -fx-font-color: #c2b6b6;" text="Last Name" />
+            <TableColumn prefWidth="89.0" style="-fx-background-color: #e45652;" text="Action" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
