@@ -1,3 +1,5 @@
+package Console;
+
 import domain.Friendship;
 import service.FriendshipService;
 import java.util.ArrayList;

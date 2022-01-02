@@ -22,7 +22,6 @@ public class FriendRequestDbRepository implements Repository<Long, FriendRequest
         this.url = url;
         this.username = username;
         this.password = password;
-
     }
 
     @Override

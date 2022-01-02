@@ -1,20 +1,13 @@
 package UI;
 
-import domain.FriendRequest;
-import domain.Friendship;
-import domain.Message;
-import domain.User;
+import domain.*;
 import service.FriendRequestService;
 import service.FriendshipService;
 import service.MessageService;
 import service.UserService;
 
-import java.io.Console;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Stream;
 
 public class UI {
     private UserService us;
@@ -41,9 +34,11 @@ public class UI {
         String[] flName = Name.split(" ");
         String firstName = flName[0];
         String lastName = flName[1];
+        String password = sc.nextLine();
         User user = new User(firstName, lastName);
+        Password p = new Password(user, password);
         user.setId(Long.valueOf(rand.nextInt(20)));
-        this.us.addUser(user);
+        this.us.addUser(user, p);
         return user;
     }
 
@@ -55,7 +50,7 @@ public class UI {
         String[] flName = Name.split(" ");
         String firstName = flName[0];
         String lastName = flName[1];
-        for (User u: us.getAll())
+        for (User u: us.getAllU())
             if (u.getFirstName().equals(firstName) && u.getLastName().equals(lastName))
             {
                 User user = u;
@@ -74,7 +69,7 @@ public class UI {
         String firstName = flName[0];
         String lastName = flName[1];
 
-        for (User usr: us.getAll())
+        for (User usr: us.getAllU())
         {
             if (usr.getFirstName().equals(firstName) && usr.getLastName().equals(lastName)) {
                 Friendship fr = new Friendship(user, usr);
@@ -108,7 +103,7 @@ public class UI {
 
     public void showUsers()
     {
-        us.getAll().forEach(System.out::println);
+        us.getAllU().forEach(System.out::println);
     }
 
 
@@ -139,7 +134,11 @@ public class UI {
     }
 
     public void deleteUser(User user) {
-        us.deleteUser(user);
+        for (Password p: this.us.getAllP())
+        {
+            if (user.getFirstName().equals(p.getUser().getFirstName()) && user.getLastName().equals(p.getUser().getLastName()))
+                us.deleteUser(user, p);
+        }
     }
 
     public void messenger(User user)
@@ -153,7 +152,7 @@ public class UI {
         List<User> to = new LinkedList<User>();
         for (String f : friends) {
             String[] fr = f.split(" ");
-            for (User u : this.us.getAll()) {
+            for (User u : this.us.getAllU()) {
                 if (u.getFirstName().equals(fr[0]) && u.getLastName().equals(fr[1])) {
                     to.add(u);
                 }
@@ -228,7 +227,7 @@ public class UI {
         String firstName = flName[0];
         String lastName = flName[1];
 
-        for (User usr: us.getAll())
+        for (User usr: us.getAllU())
         {
             if (usr.getFirstName().equals(firstName) && usr.getLastName().equals(lastName)) {
                 FriendRequest friendrequest= new FriendRequest(user,usr,"Pending");
