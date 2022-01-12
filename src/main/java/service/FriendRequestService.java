@@ -1,6 +1,7 @@
 package service;
 
 import domain.FriendRequest;
+import domain.Friendship;
 import repository.Repository;
 
 public class FriendRequestService {
@@ -28,5 +29,8 @@ public class FriendRequestService {
     {
         FriendRequest fr = this.repo.update(friendrequest);
         return fr;
+    }
+
+    public void addFriendship(Friendship friendship) {
     }
 }

@@ -53,7 +53,7 @@ public class UserDbRepository implements Repository<Long, User> {
     @Override
     public User save(User entity) {
 
-        String sql = "insert into users (first_name, last_name ) values (?, ?)";
+        String sql = "insert into users (first_name, last_name) values (?, ?)";
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
              PreparedStatement ps = connection.prepareStatement(sql)) {

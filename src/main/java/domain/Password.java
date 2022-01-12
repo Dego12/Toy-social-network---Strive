@@ -24,4 +24,10 @@ public class Password extends Entity<Long>{
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString()
+    {
+        return this.user + " " + this.password;
+    }
 }

@@ -33,13 +33,12 @@ public class PasswordDbRepository implements Repository<Long, Password> {
              ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
-                Long id = resultSet.getLong("id");
+                int id = resultSet.getInt("id");
                 String firstName = resultSet.getString("usr");
                 String password = resultSet.getString("pass");
                 String[] name = firstName.split(" ");
                 User u = new User(name[0], name[1]);
                 Password ur = new Password(u, password);
-                ur.setId(id);
                 users.add(ur);
             }
             return users;

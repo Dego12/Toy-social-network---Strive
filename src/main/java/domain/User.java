@@ -1,7 +1,7 @@
 package domain;
 
 public class User extends Entity<Long>{
-    private String firstName;
+    public String firstName;
     private String lastName;
 
     public User(String fn, String ln)
@@ -10,7 +10,7 @@ public class User extends Entity<Long>{
         this.lastName = ln;
     }
 
-    public String getFirstName() { return firstName; }
+    public String getFirstName() { return this.firstName; }
 
     public void setFirstName(String fn) { this.firstName = fn; }
 

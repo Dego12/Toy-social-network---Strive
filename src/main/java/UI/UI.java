@@ -38,6 +38,7 @@ public class UI {
         User user = new User(firstName, lastName);
         Password p = new Password(user, password);
         user.setId(Long.valueOf(rand.nextInt(20)));
+        System.out.println(user.getId());
         this.us.addUser(user, p);
         return user;
     }

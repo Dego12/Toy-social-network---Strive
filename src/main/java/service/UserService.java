@@ -14,10 +14,10 @@ public class UserService {
         this.repoP = repo2;
     }
 
+
     public User addUser(User user, Password pass) {
         User task = repoU.save(user);
         Password t2 = repoP.save(pass);
-
 
         return task;
     }
@@ -34,22 +34,6 @@ public class UserService {
         return repoP.findAll();
     }
 
-    public User Login(String name, String password)
-    {
-        String[] flName = name.split(" ");
-        String firstName = flName[0];
-        String lastName = flName[1];
-        for (User u: this.getAllU())
-            for (Password p: this.getAllP()) {
-                if ((u.getFirstName().equals(firstName) && u.getLastName().equals(lastName)) && (u.getFirstName().equals(p.getUser().getFirstName()) && u.getLastName().equals(p.getUser().getLastName())))
-                    if (p.getPassword().equals(password))
-                    {
-                        User user = u;
-                        return user;
-                    }
-                }
-        return null;
-    }
 
 
 

@@ -1,15 +1,17 @@
 package Console;
 
 import domain.*;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -20,6 +22,12 @@ import validators.FriendshipValidator;
 import validators.UserValidator;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class ConsoleController {
 
@@ -31,41 +39,55 @@ public class ConsoleController {
     private TextField us_s;
     @FXML
     private PasswordField password_s;
-    @FXML
-    private Label name;
 
-    private Repository<Long, User> userDbRepository = new UserDbRepository("jdbc:postgresql://localhost:5432/academic", "postgres", "postgres", new UserValidator());
-    private Repository<Long, Friendship> friendshipDbRepository = new FriendshipDbRepository("jdbc:postgresql://localhost:5432/academic", "postgres", "postgres", new FriendshipValidator());
-    private Repository<Long, Message> messageDbRepository = new MessageDbRepository("jdbc:postgresql://localhost:5432/academic", "postgres", "postgres");
-    private Repository<Long, FriendRequest> friendRequestDbRepository = new FriendRequestDbRepository("jdbc:postgresql://localhost:5432/academic", "postgres", "postgres");
-    private Repository<Long, Password> passwordDbRepository = new PasswordDbRepository("jdbc:postgresql://localhost:5432/academic", "postgres", "postgres");
-    private UserService us = new UserService(userDbRepository, passwordDbRepository);
-    private FriendshipService fs = new FriendshipService(friendshipDbRepository);
-    private MessageService ms = new MessageService(messageDbRepository);
-    private FriendRequestService frs= new FriendRequestService(friendRequestDbRepository);
-    private Stage dialogStage;
-    private User logged_user;
+    private Service service = new Service();
 
-
-    public void setUser(User user){
-        this.logged_user = user;
+    public void setService(Service service){
+        this.service = service;
     }
+
+    public User getLoggedUser() {
+        return service.getLoggedUser();
+    }
+
+    public void setLoggedUser(User loggedUser) {
+        this.service.setLoggedUser(loggedUser);
+    }
+
 
     @FXML
     public void handleLogin(ActionEvent a) throws IOException {
 
         String usrname = username.getText();
+        Random rand = new Random();
+        String fname = usrname.split(" ")[0];
+        String lname = usrname.split(" ")[1];
         String pass = password.getText();
-        User logged_usr = us.Login(usrname, pass);
-        this.setUser(logged_usr);
+        for (User u: this.service.getUs().getAllU()) {
+            for (Password p: this.service.getUs().getAllP())
+            {
+                if (p.getUser().getFirstName().equals(fname) && p.getUser().getLastName().equals(lname))
+                    if (u.getFirstName().equals(fname) && u.getLastName().equals(lname))
+                    {
+                        if (p.getPassword().equals(pass))
+                        {
+                            User user = u;
+                            this.setLoggedUser(user);
+                        }
+                    }
+            }
+        }
         System.out.println("logged in");
         System.out.println(pass);
 
         Stage home = (Stage) ((Node)a.getSource()).getScene().getWindow();
         FXMLLoader hm = new FXMLLoader(getClass().getResource("welcome-page.fxml"));
-        Scene homepage = new Scene(hm.load(), 891, 508);
+        Scene scene = new Scene(hm.load(), 891, 508);
+
+        WelcomeController welcomeController = hm.getController();
+        welcomeController.setService(this.service);
+        home.setScene(scene);
         home.setTitle("Hi there!");
-        home.setScene(homepage);
         home.show();
     }
 
@@ -82,29 +104,24 @@ public class ConsoleController {
     @FXML
     public void handleCreate(ActionEvent a){
         String usrnm = us_s.getText();
+        Random rand = new Random();
         String ps = password_s.getText();
         String[] usr = usrnm.split(" ");
         User user = new User(usr[0], usr[1]);
         Password pass = new Password(user, ps);
-        us.addUser(user, pass);
+        this.service.getUs().addUser(user, pass);
         System.out.println("The account has been created!");
         Stage home = (Stage) ((Node)a.getSource()).getScene().getWindow();
         home.close();
     }
 
-    @FXML
-    public void handleLoggout(ActionEvent a) throws IOException {
-        Stage home = (Stage) ((Node)a.getSource()).getScene().getWindow();
-        FXMLLoader home_window = new FXMLLoader(getClass().getResource("console-view.fxml"));
-        Scene hm_pg = new Scene(home_window.load(), 997, 495);
-        home.setTitle("Strive");
-        home.setScene(hm_pg);
-        home.show();
-    }
+
 
     @FXML
     public void handleExit()
     {
         System.exit(0);
     }
+
+
 }
